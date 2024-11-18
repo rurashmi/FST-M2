@@ -1,0 +1,15 @@
+--Drop tables
+DROP TABLE files;
+DROP TABLE word_counts;
+
+-- Create the input table
+CREATE TABLE files (line STRING);
+--Load data intot the table
+LOAD DATA LOCAL INPATH '/root/file01.txt' INTO TABLE files;
+
+--Generate output and save it in a table
+CREATE TABLE cord_counts AS 
+SELECT word, COUNT(word) as no_of_words FROM
+(SELECT explode(split(line, ' ')) AS word FROM files) as w
+GROUP By word
+ORDER By no_of_words DESC;
