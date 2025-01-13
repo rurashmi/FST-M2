@@ -1,0 +1,21 @@
+services:
+#Postgres database
+  postgres:
+    image: docker.io/postgres
+    environment:
+      - POSTGRES_PASSWORD=postgres_password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=simple_blog_api
+#Express API server
+  api:
+    build: ./
+    restart: always
+    image: docker.io/rurashmi/simple-blog-api
+    environment:
+      - POSTGRES_HOST=postgres
+      - PPOSTGRES_PORT=5432
+      - PPOSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=postgres_password
+      - PPOSTGRES_DB=simple_blog_api
+    ports:
+      - "8086:3000"
